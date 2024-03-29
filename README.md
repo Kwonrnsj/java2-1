@@ -16,17 +16,17 @@
 
 - 자동 타입 변환
 
-컴파일러에 의해 원래의 타입보다 큰 타입으로 자동 변환
+컴파일러에 의해 원래의 타입보다 큰 타입으로 자동 변환  
 치환문(=)이나 수식 내에서 타입이 일치하지 않을때
 
 ### 강제 타입 변환
 
-개발자의 읟적으로 타입 변환
+개발자의 읟적으로 타입 변환  
 () 안에 개발자가 명시적으로 타입 변환 지정
 
 ### 자바의 키 입력과 System.in
 
-키보드와 연결된 자바의 표준 입력 스트림
+키보드와 연결된 자바의 표준 입력 스트림  
 입력되는 키를 바이트(문자 아님)로 리턴하는 스트림
 
 ### Scanner 클래스
@@ -35,10 +35,143 @@
 
 객체 생성
 ```
-inport java.util.Scanner; // 임포트 문 필요
+inport java.util.Scanner; // 임포트 문 필요  
 Scanner a = new Scanner(System.in); // Scanner 객체 생성
 ```
 공백 문자:'\w', '\f', '\r', ' ', '\n'
+#### Scanner 예시
+```
+public static void main(String[] args) {
+        System.out.println("이름, 도시, 나이, 체중, 독신 여부를 빈칸으로 분리하여 입력하세요");
+
+        Scanner scanner = new Scanner(System.in);
+        String name = scanner.next();
+        System.out.println("당신의 이름은 " + name + "입니다.");
+        String city = scanner.next();
+        System.out.println("당신이 사는 도시는 " + city + "입니다.");
+        String age = scanner.next();
+        System.out.println("당신의 나이는 " + age + "입니다.");
+        String weight = scanner.next();
+        System.out.println("당신의 체중은 " + weight + "입니다.");
+        String single = scanner.next();
+        System.out.println("당신의 독신 여부는 " + single + "입니다.");
+    }
+```
+ 시간 계산하는 코드
+```
+public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("정수를 입력하세요 : ");
+        int time = scanner.nextInt(); // 정수 입력
+        int second = time % 60; // 60으로 나눈 나머지는 초
+        int minute = (time / 60) % 60; // 60으로 나눈 몫을 다시 60으로 나눈 나머지는 분
+        int hour = (time / 60) / 60; // 60으로 나눈 몫을 다시 60으로 나눈 몫은 시간
+
+        System.out.print(time + "초는 ");
+        System.out.print(hour + "시간, ");
+        System.out.print(minute + "분, ");
+        System.out.print(second + "초입니다. ");
+        scanner.close();
+    }
+```
+
+### 배열(array)
+
+인덱스와 인덱스에 대응하는 데이터들로 이루어진 자료 구조  
+    배열을 이용하면 한 번에 많은 메모리 공간 선언 가능  
+
+배열은 같은 타입의 데이터들이 순차적으로 저장되는 공간  
+    원소 데이터들이 순차적으로 저장됨  
+    인덱스를 이용하여 원소 데이터 접근  
+
+배열 인덱스  
+    0부터 시작  
+    인덱스는 배열의 시작 위치에서부터 데이터가 있는 상대 위치
+
+### 산술 연산자
+
+69/10 = 6  <- 몫6
+
+69%10 = 9  <- 나머지 9
+
+int r = n % 2 == 0 // r이 1이면 n은 홀수, 0이면 짝수
+
+int r = n % 3 == 0 // 3의 배수
+
+### 조건 연산
+3 개의 피연산자로 구성된 삼항(ternary) 연산자  
+opr1?opr2:opr3  
+opr1이 true이면, 연산식의 결과는 opr2,false이면 opr3  
+
+if else 연산자로 간결하게 표현가능
+```
+int x = 5;
+int y = 3;
+
+int big;
+if(x>y)
+    big = x;
+else 
+    big = y;
+```
+
+### 논리 연산
+a & b  
+AND 두 비트 모두1이면 1, 그렇지 않으면 0 
+
+a | b  
+OR 두 비트 모두 0이면 0, 그렇지 않으면 1 
+
+a^b  
+XOR 두 비트가 다르면 1, 같으면 0 
+
+~ a  
+NOT 연산 1을 0으로 0을 1으로
+
+### do-while 문
+
+조건식이 '참'인 동안 반복 실행
+작업문은 한 번 반드시 실행
+
+a부터 z까지 출력하는 do while문 예시
+```
+public class DoWhileSample {
+    public static void main(String[] args) {
+        char foo ='a';
+        char bar ='A';
+
+        do {
+            System.out.print(a);
+            foo = (char) (foo + 1);
+        } while(foo <= 'z');
+
+        while(bar <= 'Z') {
+            System.out.println(bar);
+            bar = (char) (bar +1);
+        }
+    }
+}
+```
+
+구구단 예시
+```
+public static void main(String[] args) throws Exception {
+       for(int i=1; i<10; i++) { // 단에 대한 반복. 1단에서 9단
+            for(int j=1; j<10; j++) { // 각 단의 곱셈
+                System.out.print(i "x" + j + "=" + i*j); // 구구셈 출력
+                System.out.print('\t'); // 하나씩 탭으로 띄기
+            }
+            System.out.println(); // 한 단이 끝나면 다음 줄로 커서 이동
+       }
+}
+```
+
+### 함수 호출 시 배열 전달 비교: C/C++ vs 자바
+
+C/C++ 경우 배열과 크기를 각각 전달 받음
+
+자바의 경우 배열만 전달받음
  
 ## 3월 22일 강의
 
