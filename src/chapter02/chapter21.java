@@ -1,3 +1,4 @@
+package chapter02;
 // 예제 2-1
 public class chapter21 {
     public static void main(String[] args) {
