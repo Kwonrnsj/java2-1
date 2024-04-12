@@ -1,5 +1,175 @@
 # 권순혁 202330104
 
+## 4월 12일 강의
+
+### static 멤버의 생성
+static 멤버는 클래스당 하나만 생성  
+객체들에 의해 공유됨
+
+### static 멤버 사용 
+클래스 이름으로 접근 가능  
+객체의 멤버로 접근 가능  
+non-static 멤버는 클래스 이름으로 전근 안 됨
+
+### 예제 4_11
+```
+class Calc {
+    int foo;
+    static int bar;
+
+    public static int abs(int a) { return a>0?a:-a; }
+    public static int abs(int a, int b) { return (a>b)?a:b; }
+    public static int abs(int a, int b) { return (a>b)?b:a; }
+}
+
+
+public class Ex4_11 {
+    public static void main(String[] args) {
+        System.out.println(Calc.abs(-5));
+        System.out.println(Calc.max(10, 8));
+        System.out.println(Calc.min(-3, -8));
+        Calc a = new Calc();
+        a.foo = 100;
+        Calc.bar = 50;
+        System.out.println(a.foo);
+        System.out.println(Calc.bar);
+    }
+}
+```
+
+### static 메소드의 제약 조건 1
+static 메소드는 오직static 멤버만 접근 가능
+1. 객체가 생성되지 않은 상황에서도 static  메소드는 실핼될 수 있기 때문에  
+, non-static 멤버 활용 불가
+2. non-static 메소드는 static 멤버 사용 가능
+
+### static 메소드의 제약 조건 2
+static 메소드는 this 사용불가  
+1. static 메소드는 객체 없이 사용 가능하므로, this 레퍼런스가 없어도 사용 가능
+
+### final 클래스와 메소드
+final 클래스 - 더 이상 클래스 상속 불가능
+
+final 메소드 - 더 이상 오버라이딩 불가능
+
+### final 필드
+final 필드, 상수 선언
+상수를 선언할 때 사용  
+상수 필드는 선언 시에 초기 값을 저장해야 한다
+
+### 클래스 상속과 객체 
+상속 선언   
+extends 키워드로 선언  
+(부모 클래스를 물려받아 확장한다는 의미)  
+부모 클래스 -> 슈퍼 클래스(super class)  
+자식 클래스 -> 서브 클래스(sub class)
+
+### Ex5_01 예제
+```
+public class Ex5_01 {
+    public static void main(String[] args) {
+        Point p = new Point();
+        p.set(x:1, y:2);
+        p.showPoint();
+
+        ColorPoint cp = new ColorPoint();
+        cp.set(x:3, y:4);
+        cp.setColor(color:"red");
+        cp.showColorPoint();
+    }
+}
+
+class Point {
+    private int x,y;
+    public void set(int x, int y) {
+        this.x = x;
+        this.y = y;
+    }
+    public void showPoint() {
+        System.out.println("(" + x + "," + y + )")
+    }
+}
+
+class ColorPoint extends Point {
+    private String color;
+    pyblic void setColor(String color) {
+        this.color = color;
+    }
+    public void showColorPoint() {
+        System.out.println(color);
+        showPoint();
+    }
+}
+```
+
+### 자바 상속의 특징
+ 클래스 다중 상속(multiple inheritance) 불허  
+ C++는 다중 상속 가능
+
+### 슈퍼 클래스의 멤버에 대한 서브 클래스의 접근
+슈퍼 클래스의 private 멤버  
+(서브 클래스에서 접근할 수 없음)  
+슈퍼 클래스의 디폴트 멤버  
+(서브 클래스가 동일한 패키지에 있을 때, 접근 가능)  
+슈퍼 클래스의 public 멤버  
+(서브 클래스는 항상 접근 가능)  
+슈퍼 클래스의 protected 멤버  
+(같은 패키지 내의 모든 클래스 접근 허용, 패키지 여부와 상관없이 서브 클래스는 접근 가능)
+
+### protected 멤버
+같은 패키지의 모든 클래스에게 허용  
+상속되는 서브 클래스(같은 패키지든 다른 패키지든 상관 없음)에게 허용
+
+### 서브 클래스와 슈퍼 클래스의 생성자 선택
+슈퍼 클래스와 서브 클래스  
+(각각 여러 개의 생성자 작성 가능)  
+서브 클래스의 객체가 생성될 때  
+(슈퍼 클래스 생성자 1개와 서브 클래스 생성자 1개가 실행)  
+서브 클래스의 생성자와 슈퍼 클래스의 생성자가 결정되는 방식  
+1. 개발자의 명시적 선택  
+ 1-1서브 클래스 개발자가 슈퍼 클래스의 생성자 명시적 선택  
+
+2. 컴파일러가 기본생성자 선택  
+ 2-1 서브 클래스 개발자가 슈퍼 클래스의 생성자를 선택하지 않는 경우
+
+### 업캐스팅 개념
+업 캐스팅은 기본 클래스의 포인터로 파생 클래스의 객체를 가리키는 것을 말한다
+
+서브 클래스의 레퍼런스를 슈퍼클래스 레퍼런스에 대입
+슈퍼 클래스 레퍼런스로 서브 클래스 객체를 가리키게 되는 현상
+
+### 다운캐스팅(downcasting)
+슈퍼 클래스 레퍼런스를 서브 클래스 레퍼런스에 대입  
+업캐스팅된 것을 다시 원래댈 되돌리는 것  
+반드시 명시적 타입 변환 지정
+
+### 업캐스팅 레퍼런스로 객체 구별
+업캐스팅된 레퍼런스로는 객체의 실제 타입을 구분하기 어려움
+
+### instanceof 연산자 사용
+레퍼런스가 가리키는 객체의 타입 식별
+
+### 메소드 오버라이딩
+서브 클래스에서 슈퍼 클래스의 메소드 중복 작성  
+슈퍼 클래스의 메소드 무력화, 항상 서브 클래스에 오버라이딩한 메소드가 실행됟록 보장됨  
+"멧드 무시하기"로 번역되기도 함
+
+### 오버라이딩으로 다형성 실현
+하나의 인터페이스에 서로 다른 구현  
+슈퍼 클래스의 메소드를 서브 클래스에서 각각 목적에 맞게 다르게구현  
+사례  
+
+### super 클래스
+슈퍼 클래스의 멤버를 접근할 때 사용되는 레퍼런스  
+super.슈퍼클래스의멤버  
+(서브 클래스에서만 사용, 슈퍼 클래스의 필드 접근)
+
+### 추상 메소드(abstract method)
+abstract로 선언된 메소드, 메소드의 코드는 없고 원형만 선언
+
+### 추상 클레스(abstract class)
+추상 메소드를 가지며, abstract로 선언된 클래스
+추상 메소드 없이, abstract로 선언한 클래스
 ## 4월 5일 강의
 
 ### 2차원 배열 선언
