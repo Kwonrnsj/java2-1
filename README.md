@@ -1,6 +1,229 @@
 # 권순혁 202330104
 
-## 4월 19일 강의
+## 5월 3일 강의
+
+### 컬렉션의 개념
+1. 요소(element) 라고 불리는 가변 개수의 객체들의 저장소  
+(객체들의 컨테이너라고도 불림)  
+(요소의 개수에 따라 크기 자동 조절)   
+(요소의 삽입, 삭제에 따른 요소의 위치 자동 이동)  
+2. 고정 크기의 배열을 다루는 어려움 해소  
+3. 다양한 객체들의 삽입, 삭제, 검색 등의 관리 용이
+
+### 컬렉션의 특징
+컬렉션은 제네릭 기법으로 구현 
+
+제네릭 컬렉션 사례 : 벡터 Vector <.E>  
+E 에서 E에 구체적인 타입을 주어 구체적인 타입만 다루는 벡터로 활용  
+제네릭은 형판과 같은 개념이다.
+
+### 제네릭
+제레닉은 특정 타임만 다루지 않고, 여러 종류의 타입으로 변신할 수 있도록 클래스나  
+특정 메소드를 일반화시키는 기법 
+
+C++의 템플릿과 동일  
+JDK 1.5부터 도입(2004년 기점)
+
+### 벡터 Vector <.E>
+<.E>에 사용할 요소의 특정 타입으로 구체화    
+배열을 가변 크기로 다룰 수 있게 하는 컨테이너  
+요소 객체들을 삽입,삭제,검새가는 컨테이너  
+Vector에 삽입 가능한 것 (객체, null)  
+Vector에 객체 삽입(벡터의 맨 뒤, 중간에 객체 삽입 가능)  
+Vector에서 객체 삭제(임의의 위치에 있는 객체 삭제 가능)
+
+```
+int n = v.size() // n은 3 (사용 중인 값)
+int c = v.capacity(); // c는 7(전체 값)
+```
+## 벡터 예시 
+```
+public class VectorEx {
+    public static void main(String[] args) {
+        // 정수 값만 다루는 제네릭 벡터 생성
+        Vector<Integer> v = new Vector<Integer>();
+        v.add(5); // 5 삽입
+        v.add(4); // 4 삽입
+        v.add(-1);  // -1 삽입
+
+        // 벡터 중간에 삽입하기
+        v.add(2,100); // 4와 -1 사이에 정수 100 삽입
+        System.out.println("벡터 내의 요소 객체 수 : " + v.size());
+        System.out.println("벡터의 현재 용량 : " + v.capacity());
+
+        // 모든 요소 정수 출력하기
+        for(int i=0; i<v.size(); i++) {
+            int n = v.get(i); // 벡터의 i 번째 정수
+            System.out.println(n);
+        }
+        // 벡터 속의 모든 정수 더하기
+        int sum = 0;
+        for (int i=0; i<v.size(); i++) {
+            int n = v.elementAt(i);
+            sum += n;
+        }
+        System.out.println("벡터에 있는 정수 합 : " + sum);
+       
+    }
+}
+
+```
+
+### JDK 1.5 이전
+Vector<.Integer> v = new Vector<.Integer>(); // java 7 이전
+7 이후
+Vector<.Integer> v = new Vector<>(); // java 7부터 추가, 가능
+10 이후
+var v = new Vector<.Integer>(); // java 10부터 추가, 가능
+
+### ArrayList
+가변 크기 배열을 구현한 클래스  
+벡터와 거의 동일하다
+
+### Iterator 인터페이스
+리스트 구조의 컬렉션에서 요소의 순차 검색을 위한 인터페이스
+
+### HashMap
+키와 값의 쌍으로 구성되는 요소를 다루는 컬렉션  
+삽입 및 검색이 빠른 특징이 존재
+## HashMap 예시 
+```
+public static void main(String[] args) {
+        HashMap<String, String> dic = new HashMap<String, String>();
+        dic.put("baby", "아기");
+        dic.put("love","사랑");
+        dic.put("apple", "사과");
+
+        Set<String> keys = dic.keySet();
+        Iterator<String> it = keys.iterator();
+        while (it.hasNext()) {
+            String key = it.next();
+            String value = dic.get(key);
+            System.out.println("(" + key + "," + value + ") ");
+        }
+        System.out.println();
+
+        Scanner scanner = new Scanner(System.in);
+        for (int i = 0; i<3; i++) {
+            System.out.println("찾고 싶은 단어는?");
+            String eng = scanner.next();
+            String kor = dic.get(eng);
+            if(kor == null)
+                    System.out.println(eng + "는 없는 단어 입니다.");
+                
+            else   
+                    System.out.println(kor);
+        }
+    }
+```
+### 제네릭 만들기
+1. 제네릭 클래스 작성  
+클래스 이름 옆에 일반화된 타입 매개 변수 추가하기  
+2. 제네릭 객체 생성 및 활용  
+제네릭 타입에 구체적인 타입을 지정하여 객체를 생성하는 것을 구체화하고 함
+
+### 자바의 GUI
+GUI란  사용자가 편리하게 입출력 할 수 있도록 그래픽으로 화면을 구성하고, 마우스나   키보드로 입력 받을 수 있도록 지원하는 사용자 인터페이스  
+자바 언어에서 GUI 응용프로그램 작성  
+AWT와 Swing 패키지에 강력한 GUI 컴포넌트 제공  
+쉬운 GUI 프로그래밍
+
+### AWT
+자바가 청므 나왔을 때부터 배포된 GUI 패키지, 최근에는 거의 사용하지 않음
+
+### Swing 패키지
+AWT 기술을 기반으로 작성된 자바 라이브러리  
+모든 AWT 기능 + 추가된 풍부하고 화려한 고급 컴포넌트
+
+### 컨테이너
+다른 컴포넌트를 포함할 수 있는 GUI 컴포넌트
+
+### 컴포넌트
+컴테이너에 포함되어야 화면에 출력될 수 있는 GUI객체  
+다른 컴포넌트를 포함할 수 없는 순수 컴포넌트  
+모든 GUI 컴포넌트가 상속받는 클래스: java.awt.Component  
+스윙 컴포넌트가 상속받는 클래스: javax.swing.JComponent  
+
+### 컴포넌트 예시
+```
+import javax.swing.*;
+import java.awt.*;
+
+public class ContentPaneEx extends JFrame{
+    public ContentPaneEx() {
+        setTitle("ContentPane과 JFrame 예제"); //프레임의 타이틀 달기
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        Container contentPane = getContentPane();// 컨텐트팬 알아내기
+        contentPane.setBackground(Color.ORANGE);// 오렌지색 배경 설정
+        contentPane.setLayout(new FlowLayout());//컨텐팬에 FlowLayout
+                                                // 배치관리자 달기
+        contentPane.add(new JButton("OK")); //ok버튼 달기
+        contentPane.add(new JButton("Cancel")); // Cancel 버튼 달기
+        contentPane.add(new JButton("Ignore")); // Ignore 버튼 달기
+
+        setSize(300, 150); //프레임 크기 300x150 설정
+        setVisible(true);// 화면에 프레임 출력
+    }
+    public static void main(String[] args) {
+        new ContentPaneEx();
+    }
+}
+
+```
+
+### 최강위 컨테아너
+다른 컨테이너에 포함되지 않고도 화면에 출력되며 독립적으로 존재 가능한 컨테이너  
+(스스로 화면에 자신을 출력하는 컨테아너 : JFrame, JDialog, JApplet)
+
+
+### 컨테이너와 컴포넌트의 포함관계
+최상위 컨테이너를 바닥에 깔고, 그 위에 컨테이너를 놓고,  
+다시 컴포넌트를 쌓아가는 방식
+
+### 스윙 GUI 프로그램 만들기
+스윙 GUI 프로그램을 만드는 과정
+1. 스윙 프레임 만들기
+2. main() 메소드 작성
+3. 스윙 프레임에 스윙 컴포넌트 붙이기
+
+### 스윙 프레임
+스윙 프레임이란 모든 스윙 컴포넌트를 담는 최상위 컨테이너
+(Jframe을 상속받아 구현, 컴포넌트들은 화면에 보이려면 스윙 프레임에 부착 되어야 함)
+
+스윙 프레임 기본 구성
+프레임 - 스윙 프로그램의 기본 틀
+메뉴바 - 메뉴들이 부착되는 공간
+컨텐트팬 - GUI 컴포넌트들이 부착되는 공간
+
+컨텐트팬이란 ?  
+스윙 컴포넌트들이 부착되는 공간
+
+타이틀 달기  
+super()나 setTitle() 이용
+## 프레임 예시
+```
+import javax.swing.*;
+
+public class MyFrame extends JFrame{
+    public MyFrame() {
+        setTitle("300x300 프레임");
+        setSize(300, 300);
+        setVisible(true);
+    }
+    public static void main(String[] args) {
+        MyFrame frame = new MyFrame();
+    }
+}
+
+```
+
+### 스윙 응용프로그램에서 main()의 기능과 위치
+스윙 응용프로그램이에서 main()의 기능과 최소한의 바람직  
+스윙 응용프로그램이 실행되는 시작점으로서의 기능만  
+스윙 프레임을 생성하는 정보의 코드로 최소화  
+
+# 4월 19일 강의
 
 ### 추상 클래스의 상속과 구현
 1. 추상 클래스 상속  
@@ -12,11 +235,10 @@
 
 추상 클래스 Calculator를 상속받는 GoodCalc 클래스를 구현하라.
 ```
-abstract class Calculator {
+abstract class Calculator 
     public abstract int add(int a, int b);
     public abstract int subtract(int a, int b);
     public abstract int double average(int[] a);
-}
 ```
 
 ### 자바의 인터페이스
