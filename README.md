@@ -1,5 +1,190 @@
 # 권순혁 202330104
 
+## 5월 17일 강의
+
+### 컨테이너의 배치관리자 유형 4가지
+1. FlowLayout 배치 관리자  
+컴포넌트가 삽입되는 순서대로 왼쪽에서 오른쪽으로 배치
+2. BorderLayout 배치 관리자  
+컨테이너의 공간을 동, 서, 남, 북, 중앙의 5개 영역으로 나눔
+3. GridLayout 배치관리자  
+컨테이너를 프로그램에서 설정한 동일한 크기의 2차원 격자로 나눔
+4. CardLayout  
+컨테이너의 공간에 카드를 쌓아 놓은 듯이 컴포넌트를 포개어 배치
+
+### 컨테이너의 디폴트 배치관리자
+AWT와 스윙 컨테이너  
+window,jwindow 디폴트 괸리자 > BorderLayout
+
+### 컨테이너의 새로운 배치관리자 설정
+컨테이너에 새로운 배치관리자 설정  
+setLayout(LayoutManager lm) 메소드 호출  
+lm을 새로운 배치관리자로 설정
+
+### FlowLayout 배치관리자
+컴포넌트를 컨테이너 내에 왼쪽에서 오른쪽으로 배치   
+
+### FlowLayout의 생성자
+FlowLayout()  
+FlowLayout(int align, inthGap, intvGap)  
+align: 컴포넌트를 정렬하는 방법 지정,   
+hGap:좌우 두 컴포넌트 사이의 수평 간격, 픽셀 단위, 디폴트는 5  
+vGap:상하 두 컴포넌트 사이의 수평 간격, 픽셀 단위, 디폴트는 5
+
+### FlowLayout 사용 예시
+```
+public class FlowLayoutEx extends JFrame{
+    public FlowLayoutEx() {
+        setTitle("FlowLayout 예제");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        Container contentPane = getContentPane(); // 컨텐트팬 알아내기
+
+        // 왼쪽 정렬로, 수평 간격을 30, 수직 간격을 40 픽셀로 배치하는
+        // FlowLayout 생성
+
+        contentPane.setLayout(new FlowLayout(FlowLayout.LEFT, 30, 40));
+
+        contentPane.add(new JButton("add"));
+        contentPane.add(new JButton("sub"));
+        contentPane.add(new JButton("mul"));
+        contentPane.add(new JButton("div"));
+        contentPane.add(new JButton("Calculate"));
+        
+        setSize(300, 200); // 프레임 크기 300X200 설정
+        setVisible(true); // 화면에 프레임 출력
+    }
+    public static void main(String[] args) {
+        new FlowLayoutEx();
+    }
+}
+```
+
+### BorderLayout 생성자
+BorderLayout()  
+BorderLayout(int hGap, int vGap)  
+hGap:좌우 두 컴포넌트 사이의 수평 간격, 픽셀 단위, 디폴트 : 0    
+vGap:상하 두 컴포넌트 사이의 수평 간격, 픽셀 단위, 디폴트 : 0    
+
+add() 메소드  
+void add(Component comp, int index)  
+comp 컴포넌트를 index 위치에 삽입한다.  
+index: 컴포넌트의 위치 
+
+### BorderLayout 사용 예시
+
+```
+public class BorderLayoutEx extends JFrame{
+    public BorderLayoutEx() {
+        setTitle("BorderLayoutEx 예제");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        Container contentPane = getContentPane(); // 컨텐트팬 알아내기
+
+        // 컨텐트팬에 BorderLayout 배치관리자 설정
+
+        contentPane.setLayout(new BorderLayout());
+
+        contentPane.add(new JButton("Calculate"), BorderLayout.CENTER);
+        contentPane.add(new JButton("add"), BorderLayout.NORTH);
+        contentPane.add(new JButton("sub"), BorderLayout.SOUTH);
+        contentPane.add(new JButton("mul"), BorderLayout.EAST);
+        contentPane.add(new JButton("div"), BorderLayout.WEST);
+        
+        setSize(300, 200); // 프레임 크기 300X200 설정
+        setVisible(true); // 화면에 프레임 출력
+    }
+    public static void main(String[] args) {
+        new FlowLayoutEx();
+    }
+}
+```
+
+### GridLayout 배치관리자
+컨테이너 공간을 동일한 사각형 격자(그리드)로 분할하고 각 셀에 컴포넌트 하나씩 배치   
+생성자에 행수와 열수 지정, 셀에 왼쪽에서 오른쪽으로, 다시 위에서 아래로 순서대로 배치
+
+### GridLayout 생성자
+GridLayout()  
+GridLayout(int rows, int cols)  
+GridLayout(int rows, int cols, int hGap, int vGap)  
+rows : 격자의 행수(디폴트 1)  
+cols : 격자의 열수(디폴트 1)    
+hGap:좌우 두 컴포넌트 사이의 수평 간격, 픽셀 단위, 디폴트 : 0      
+vGap:상하 두 컴포넌트 사이의 수평 간격, 픽셀 단위, 디폴트 : 0      
+rows x cols 만큼의 셀을 가진 격자로 컨테이너 공간을 분할, 배치
+
+### GridLayout 사용 예시
+```
+public class GridLayoutEx extends JFrame{
+    public GridLayoutEx() {
+        setTitle("GridLayoutEx 예제");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        Container contentPane = getContentPane(); // 컨텐트팬 알아내기
+
+        // 1x10의 GridLayout 배치관리자
+
+        contentPane.setLayout(new GridLayout(1, 10));
+
+        for(int i=0; i<10; i++) { // 10개의 버튼 부착
+            String text = Integer.toString(i); // i를 문자열로 변환
+            JButton button = new JButton(text);
+            contentPane.add(button); // 컨텐트에 버튼 부착
+        }
+
+        setSize(500, 200); // 프레임 크기 300X200 설정
+        setVisible(true); // 화면에 프레임 출력
+    }
+    public static void main(String[] args) {
+        new GridLayoutEx();
+    }
+}
+```
+
+### 배치관리자 없는 컨테이너
+배치관리자가 없는 컨테이너가 필요한 경우 
+
+응용프로그앰에서 직접 컴포넌트의 크기와 위치를 결정하고자 하는 경우  
+1. 컴포넌트의 크기나 위치를 개잘하 임의로 결정하고자 하는 경우  
+2. 게임 프로그램과 같이 시간이나 마우스/키보드의 입력에 따라 컴포넌트들의 위치와  
+크기가 수시로 변하는 경우  
+3. 여러 컴포넌트들이 서로 겹쳐 출력하고자 하는 경우
+
+### 컴포넌트의 절대 위치와 크기 설정
+배치관리자가 없는 컨테이너에 컴포넌트를 삽입할 때
+1. 프로그램에서 컴포넌트의 절대 크기와 위치 설정
+2. 컴포넌트들이 서로 겹치게 할 수 있음
+
+### 컴포넌트 배치관리자
+```
+public class NullContainerEx extends JFrame{
+    public NullContainerEx() {
+        setTitle("배치관리자 없이 절대 위치에 배치하는 예제");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        Container contentPane = getContentPane();
+        contentPane.setLayout(null); // 컨텐트팬의 배치관리자 제거
+
+        JLabel la = new JLabel("Hello, Press Buttons!");
+        la.setLocation(130, 50);
+        la.setSize(200, 20);
+        contentPane.add(la);
+
+
+
+        for(int i=0; i<=9; i++) { // 10개의 버튼 부착
+            JButton b = new JButton(Integer.toString(i));
+            b.setLocation(i*15, i*15);
+            b.setSize(50, 20);
+            contentPane.add(b);
+        }
+
+        setSize(300, 200); // 프레임 크기 300X200 설정
+        setVisible(true); // 화면에 프레임 출력
+    }
+    public static void main(String[] args) {
+        new NullContainerEx();
+    }
+}
+```
+
 ## 5월 3일 강의
 
 ### 컬렉션의 개념
